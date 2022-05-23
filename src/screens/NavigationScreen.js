@@ -3,17 +3,20 @@ import { BottomNavigation } from 'react-native-paper';
 import AccueilScreen from '../screens/AccueilScreen';
 import PizzaScreen from '../screens/PizzaScreen';
 import Welcome from '../screens/Welcome';
+import ContactScreen from './ContactScreen';
 
 const NavigationScreen = () => {
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: 'home', title: 'Home', icon: 'home' },
         { key: 'pizza', title: 'Pizza', icon: 'pizza' },
+        { key: 'contact', title: 'Contact', icon:'phone'}
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
         home: AccueilScreen,
-        pizza: PizzaScreen
+        pizza: PizzaScreen,
+        contact: ContactScreen
     });
 
     return (
