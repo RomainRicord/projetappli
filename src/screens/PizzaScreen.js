@@ -1,11 +1,35 @@
 import {View,ImageBackground,StyleSheet,ScrollView,Image} from 'react-native'
-import { BottomNavigation,Button } from 'react-native-paper';
+import { BottomNavigation,Button,Card,Title } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import SelectDropdown from 'react-native-select-dropdown'
 
 const PizzaScreen = () => {
 
     const pizza = ["Traditions","Terroirs","Montagnardes"]
+
+    let myloop = []
+    let secondloop = []
+
+for (let i = 0; i < 10; i++) {
+    if (i%2 == 1){
+  myloop.push(
+    <Card key={i} style={{width:150,height:100,marginBottom:60}}>
+        <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
+    
+        <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
+    
+    </Card>
+  );} else {
+    secondloop.push(
+        <Card key={i} style={{width:150,height:100,marginBottom:60}}>
+            <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
+        
+            <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
+        
+        </Card>
+      );
+  }
+}
 
     return(
         <ImageBackground
@@ -22,13 +46,9 @@ const PizzaScreen = () => {
                     console.log(selectedItem, index)
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
-                    // text represented after item is selected
-                    // if data array is an array of objects then return selectedItem.property to render after item is selected
                     return selectedItem
                 }}
                 rowTextForSelection={(item, index) => {
-                    // text represented for each item in dropdown
-                    // if data array is an array of objects then return item.property to represent item in dropdown
                     return item
                 }}
                 buttonStyle={styles.button}
@@ -36,10 +56,22 @@ const PizzaScreen = () => {
                 dropdownStyle={{color:'white',backgroundColor:'white'}}
                 rowTextStyle={styles.buttonlabel}
                 rowStyle={styles.dropdownStyle}
+                defaultButtonText="Traditions"
                 renderDropdownIcon={()=> <View style={{width:30, borderWidth:1}}>
                 <Icon name="arrow-down" size={30} color="#ffffff" />
               </View>}
             /></View>
+
+            <ScrollView style={{flex:1}}>
+                <View style={{display:'flex',flexDirection:'row',margin:20,justifyContent:'space-between'}}>
+                    <View style={{display:'flex',flexDirection:'column'}}>
+                        {myloop}
+                    </View>
+                    <View style={{display:'flex',flexDirection:'column'}}>
+                        {secondloop}
+                    </View>
+                </View>
+            </ScrollView>
     </ImageBackground>
     )
 }
