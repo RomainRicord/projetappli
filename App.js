@@ -1,14 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
+import PizzaScreen from './src/screens/PizzaScreen';
+import Welcome from './src/screens/Welcome';
 
 const App = () => {
+
+  const [getWelcome,SetWelcome] = useState(false)
+
   return (
     <PaperProvider>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
+        {!getWelcome &&
+        <Welcome SetWelcome={SetWelcome}/>
+        } 
+        {getWelcome &&
+         <PizzaScreen/> 
+        }
     </PaperProvider>
   );
 }
