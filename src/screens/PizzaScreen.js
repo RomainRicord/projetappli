@@ -6,14 +6,17 @@ import AccueilScreen from './AccueilScreen';
 import Welcome from './Welcome';
 import ChoosePizzaScreen from './ChoosePizzaScreen';
 import ContactScreen from './ContactScreen';
+import terroirs from '../data/terroirs';
+import traditions from '../data/traditions';
+import montagnarde from '../data/montagnarde';
 
 import { useState,useEffect } from 'react';
 
-const PizzaScreen = (props) => {
+const getlength = () => {
 
-    const traditions = require('../../assets/json/traditions.json')
-    const terroirs = require('../../assets/json/terroirs.json')
-    const montagnardes = require('../../assets/json/montagnardes.json')
+}
+
+const PizzaScreen = (props) => {
 
     const pizza = ["Traditions","Terroirs","Montagnardes"]
     const [visible, setVisible] = useState(false);
@@ -22,39 +25,25 @@ const PizzaScreen = (props) => {
     const containerStyle = {backgroundColor: 'white', padding: 20};
     const [listpizza,setlistpizza] = useState(traditions)
 
-    let myloop = []
-    let secondloop = []
+    const [firstHalf,setfirstHalf] = useState([])
+    const [secondHalf,setsecondHalf] = useState([])
+
+    const Map_ = () => {
+
+        const middleIndex = Math.ceil(listpizza.length / 2);
+
+        setfirstHalf(listpizza.splice(0, middleIndex))   
+        setsecondHalf(listpizza.splice(-middleIndex))
+
+        console.log(firstHalf,secondHalf)
+        
+    }
 
     useEffect(() => {
 
-        listpizza.map((e,k) => {
+        console.log("PizzaScreenMount")
 
-            console.log(`../../assets/img/${e.picture}`)
-            const img = require('../../assets/vivaldi_09158900_193220496.jpg')
-
-            console.log(e)
-            if (k%2 == 1){
-
-                myloop.push(
-                    <Pressable key={k} onPress={showModal}>
-                    <Card style={{width:150,height:100,marginBottom:60}}>
-                        <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
-                    
-                        <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
-                    
-                    </Card></Pressable>
-                );
-            
-            } else {
-                secondloop.push(
-                    <Card key={k} style={{width:150,height:100,marginBottom:60}}>
-                        <Image style={{width:150,height:100}} source={img} />
-                    
-                        <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
-                    
-                    </Card>)
-            }
-        })
+        Map_()
 
     },[])
 
@@ -66,16 +55,41 @@ const PizzaScreen = (props) => {
       blurRadius={3}
     >
         <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{flex: 1, justifyContent: "center", alignItems: "center",backgroundColor:'rgba(0,0,0,0.7)'}}>
-          <ChoosePizzaScreen title="Margherita" ingredients="Olive, origan"/>
-        </Modal>
-      </Portal>
+            <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{flex: 1, justifyContent: "center", alignItems: "center",backgroundColor:'rgba(0,0,0,0.7)'}}>
+                <ChoosePizzaScreen title="Margherita" ingredients="Olive, origan"/>
+            </Modal>
+        </Portal>
             <View style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:125,backgroundColor:'rgb(0,0,0)'}}>
             
             <SelectDropdown
                 data={pizza}
                 onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index)
+                    if ((selectedItem) == "Terroirs") {
+                        setlistpizza(terroirs)
+                        const middleIndex = Math.ceil(listpizza.length / 2);
+
+                        setfirstHalf(listpizza.slice().splice(0, middleIndex))   
+                        setsecondHalf(listpizza.slice().splice(0, middleIndex))
+                        
+                        console.log("SetTerroirs")
+                    } else if ((selectedItem) == "Traditions") {
+                        setlistpizza(traditions)
+                        const membersToRender = listpizza.filter(member => member.name)
+                        const middleIndex = Math.ceil(membersToRender.length / 2);
+                        
+                        setfirstHalf(listpizza.slice().splice(0, middleIndex))   
+                        setsecondHalf(listpizza.slice().splice(0, middleIndex))
+                        console.log(listpizza,firstHalf,secondHalf,middleIndex,listpizza)
+                        console.log("SetTraditions")
+                    } else if ((selectedItem) == "Montagnardes") {
+                        setlistpizza(montagnarde)
+                        const middleIndex = Math.ceil(listpizza.length / 2);
+
+                        setfirstHalf(listpizza.slice().splice(0, middleIndex))   
+                        setsecondHalf(listpizza.slice().splice(0, middleIndex))
+                        console.log("SetMontagnardes")
+                    }
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem
@@ -96,20 +110,36 @@ const PizzaScreen = (props) => {
 
             <ScrollView style={{flex:1}}>
                 
-                    {listpizza.map((e,k) => {
-                        
-                        return(
-                            <View key={k} style={{display:'flex',flexDirection:'row',margin:20,justifyContent:'space-between'}}>
-                                <View style={{display:'flex',flexDirection:'column'}}>
-                                    {myloop}
-                                </View>
-                                <View style={{display:'flex',flexDirection:'column'}}>
-                                    {secondloop}
-                                </View>
-                            </View>
-                        )
-
-                    })}
+                    
+                <View style={{display:'flex',flexDirection:'row',margin:20,justifyContent:'space-between'}}>
+                    <View style={{display:'flex',flexDirection:'column'}}>
+                        {firstHalf.map((e,k) => {
+                            return(
+                                <Pressable key={k} onPress={showModal}>
+                                <Card style={{width:150,height:100,marginBottom:60}}>
+                                    <Image style={{width:150,height:100}} source={e.picture} />
+                                
+                                    <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>{e.name}</Title>
+                                
+                                </Card></Pressable>
+                            )
+                        })}
+                    </View>
+                    <View style={{display:'flex',flexDirection:'column'}}>
+                        {secondHalf.map((e,k) => {
+                            return(
+                                <Pressable key={k} onPress={showModal}>
+                                <Card style={{width:150,height:100,marginBottom:60}}>
+                                    <Image style={{width:150,height:100}} source={e.picture} />
+                                
+                                    <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>{e.name}</Title>
+                                
+                                </Card></Pressable>
+                            )
+                        })}
+                    </View>
+                </View>
+                    
                 
             </ScrollView>
     </ImageBackground>
