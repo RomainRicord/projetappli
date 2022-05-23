@@ -7,40 +7,56 @@ import Welcome from './Welcome';
 import ChoosePizzaScreen from './ChoosePizzaScreen';
 import ContactScreen from './ContactScreen';
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 const PizzaScreen = (props) => {
+
+    const traditions = require('../../assets/json/traditions.json')
+    const terroirs = require('../../assets/json/terroirs.json')
+    const montagnardes = require('../../assets/json/montagnardes.json')
 
     const pizza = ["Traditions","Terroirs","Montagnardes"]
     const [visible, setVisible] = useState(false);
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const containerStyle = {backgroundColor: 'white', padding: 20};
+    const [listpizza,setlistpizza] = useState(traditions)
 
     let myloop = []
     let secondloop = []
 
-for (let i = 0; i < 10; i++) {
-    if (i%2 == 1){
-  myloop.push(
-    <Pressable key={i} onPress={showModal}>
-    <Card style={{width:150,height:100,marginBottom:60}}>
-        <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
-    
-        <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
-    
-    </Card></Pressable>
-  );} else {
-    secondloop.push(
-        <Card key={i} style={{width:150,height:100,marginBottom:60}}>
-            <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
-        
-            <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
-        
-        </Card>
-      );
-  }
-}
+    useEffect(() => {
+
+        listpizza.map((e,k) => {
+
+            console.log(`../../assets/img/${e.picture}`)
+            const img = require('../../assets/vivaldi_09158900_193220496.jpg')
+
+            console.log(e)
+            if (k%2 == 1){
+
+                myloop.push(
+                    <Pressable key={k} onPress={showModal}>
+                    <Card style={{width:150,height:100,marginBottom:60}}>
+                        <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
+                    
+                        <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
+                    
+                    </Card></Pressable>
+                );
+            
+            } else {
+                secondloop.push(
+                    <Card key={k} style={{width:150,height:100,marginBottom:60}}>
+                        <Image style={{width:150,height:100}} source={img} />
+                    
+                        <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>Margherita</Title>
+                    
+                    </Card>)
+            }
+        })
+
+    },[])
 
     return(
         <ImageBackground
@@ -79,14 +95,22 @@ for (let i = 0; i < 10; i++) {
             /></View>
 
             <ScrollView style={{flex:1}}>
-                <View style={{display:'flex',flexDirection:'row',margin:20,justifyContent:'space-between'}}>
-                    <View style={{display:'flex',flexDirection:'column'}}>
-                        {myloop}
-                    </View>
-                    <View style={{display:'flex',flexDirection:'column'}}>
-                        {secondloop}
-                    </View>
-                </View>
+                
+                    {listpizza.map((e,k) => {
+                        
+                        return(
+                            <View key={k} style={{display:'flex',flexDirection:'row',margin:20,justifyContent:'space-between'}}>
+                                <View style={{display:'flex',flexDirection:'column'}}>
+                                    {myloop}
+                                </View>
+                                <View style={{display:'flex',flexDirection:'column'}}>
+                                    {secondloop}
+                                </View>
+                            </View>
+                        )
+
+                    })}
+                
             </ScrollView>
     </ImageBackground>
     )
