@@ -1,8 +1,12 @@
-import {View,ImageBackground,StyleSheet,ScrollView} from 'react-native'
+import {View,ImageBackground,StyleSheet,ScrollView,Image} from 'react-native'
 import { BottomNavigation,Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import SelectDropdown from 'react-native-select-dropdown'
 
 const PizzaScreen = () => {
+
+    const pizza = ["Traditions","Terroirs","Montagnardes"]
+
     return(
         <ImageBackground
       style={{ flex: 1 }}
@@ -10,19 +14,32 @@ const PizzaScreen = () => {
       resizeMode="cover"
       blurRadius={3}
     >
-        <ScrollView horizontal={true} >
+            <View style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:125,backgroundColor:'rgb(0,0,0)'}}>
             
-            <View style={{display:'flex',flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center',height:125,backgroundColor:'rgb(0,0,0)',zIndex:0}}>
-            
-            <Button mode="contained" style={styles.button} labelStyle={styles.buttonlabel}>Traditions</Button>
-            <Button mode="contained" style={styles.button} labelStyle={styles.buttonlabel}>Terroirs</Button>
-            <Button mode="contained" style={styles.button} labelStyle={styles.buttonlabel}>Montagnardes</Button>
-            </View>
-            <View style={{position:'absolute',display:'flex',flex:1,zIndex:1,flexDirection:'row',alignItems:'center',justifyContent:'center',height:125}}>
-                <Icon name="arrow-left" size={30} style={{color:'white'}}/>
-            </View>
-            
-        </ScrollView>
+            <SelectDropdown
+                data={pizza}
+                onSelect={(selectedItem, index) => {
+                    console.log(selectedItem, index)
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                    // text represented after item is selected
+                    // if data array is an array of objects then return selectedItem.property to render after item is selected
+                    return selectedItem
+                }}
+                rowTextForSelection={(item, index) => {
+                    // text represented for each item in dropdown
+                    // if data array is an array of objects then return item.property to represent item in dropdown
+                    return item
+                }}
+                buttonStyle={styles.button}
+                buttonTextStyle={styles.buttonlabel}
+                dropdownStyle={{color:'white',backgroundColor:'white'}}
+                rowTextStyle={styles.buttonlabel}
+                rowStyle={styles.dropdownStyle}
+                renderDropdownIcon={()=> <View style={{width:30, borderWidth:1}}>
+                <Icon name="arrow-down" size={30} color="#ffffff" />
+              </View>}
+            /></View>
     </ImageBackground>
     )
 }
@@ -39,9 +56,18 @@ const styles = StyleSheet.create({
         margin:10,
         display:'flex',
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        color:'white'
     },
     buttonlabel:{
-        fontSize:12
+        fontSize:18,
+        color:'white',
+        backgroundColor:'#171717',
+    },
+    dropdownStyle:{
+        backgroundColor:'#171717',
+        borderWidth:2,
+        borderColor:'#B70021',   
+        color:'white'
     }
   });
