@@ -3,7 +3,9 @@ import {Paragraph, Title} from 'react-native-paper'
 
 const ChoosePizzaScreen = (props) => {
 
-    console.log(props.route.title_)
+    const {title,ingredients} = props
+
+    console.log(title)
 
     return(
         <ImageBackground
@@ -14,12 +16,12 @@ const ChoosePizzaScreen = (props) => {
     >
 
         <Image source={require('../../assets/i18445-margherite.jpeg')} style={{width:350    ,height:300,marginTop:20}} resizeMode="cover" />
-        <Title style={{backgroundColor:'rgba(0,0,0,0.7)',color:'white',width:350,textAlign:'center',fontSize:32,padding:8,marginTop:20,marginBottom:20}}>{props.route.title_}</Title>
+        <Title style={{backgroundColor:'rgba(0,0,0,0.7)',color:'white',width:350,textAlign:'center',fontSize:32,padding:8,marginTop:20,marginBottom:20}}>{title}</Title>
         
         <View style={{width:350,flex:1,marginBottom:20,backgroundColor:'rgba(0,0,0,0.7)'}}>
 
             <Title style={{color:'white',textAlign:'center',fontSize:32,marginTop:10}}>Ingredients:</Title>
-            <Paragraph style={{color:'white',textAlign:'center',fontSize:20,marginTop:10}}>Tomates, mozzarella, olives, origan</Paragraph>
+            <Paragraph style={{color:'white',textAlign:'center',fontSize:20,marginTop:10}}>{ingredients}</Paragraph>
 
         </View>
 

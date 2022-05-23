@@ -1,5 +1,5 @@
 import {View,ImageBackground,StyleSheet,ScrollView,Image,Pressable} from 'react-native'
-import { BottomNavigation,Button,Card,Title } from 'react-native-paper';
+import { BottomNavigation,Button,Card,Title,Modal,Portal } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import SelectDropdown from 'react-native-select-dropdown'
 import AccueilScreen from './AccueilScreen';
@@ -7,11 +7,15 @@ import Welcome from './Welcome';
 import ChoosePizzaScreen from './ChoosePizzaScreen';
 import ContactScreen from './ContactScreen';
 
+import { useState } from 'react';
+
 const PizzaScreen = (props) => {
 
-    console.log(props.route)
-
     const pizza = ["Traditions","Terroirs","Montagnardes"]
+    const [visible, setVisible] = useState(false);
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+    const containerStyle = {backgroundColor: 'white', padding: 20};
 
     let myloop = []
     let secondloop = []
@@ -19,24 +23,7 @@ const PizzaScreen = (props) => {
 for (let i = 0; i < 10; i++) {
     if (i%2 == 1){
   myloop.push(
-    <Pressable key={i} onPress={() => {
-        let route_ = []
-
-        route_ = props.route.route
-        
-        console.log(typeof(route_))
-
-        route_.push({ key: 'choosepizza2', title: 'choosepizza', icon:'pencil',title_:'Margherita',ingredients:'Tomates, mozzarella, olives, origan'})
-
-        props.route.setroute(route_)
-        
-        props.route.setscenemap(BottomNavigation.SceneMap({
-            home: AccueilScreen,
-            pizza: PizzaScreen,
-            contact: ContactScreen,
-            choosepizza: ChoosePizzaScreen
-        }))
-        }}>
+    <Pressable key={i} onPress={showModal}>
     <Card style={{width:150,height:100,marginBottom:60}}>
         <Image style={{width:150,height:100}} source={require("../../assets/vivaldi_09158900_193220496.jpg")} />
     
@@ -62,6 +49,11 @@ for (let i = 0; i < 10; i++) {
       resizeMode="cover"
       blurRadius={3}
     >
+        <Portal>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{flex: 1, justifyContent: "center", alignItems: "center",backgroundColor:'rgba(0,0,0,0.7)'}}>
+          <ChoosePizzaScreen title="Margherita" ingredients="Olive, origan"/>
+        </Modal>
+      </Portal>
             <View style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:125,backgroundColor:'rgb(0,0,0)'}}>
             
             <SelectDropdown
