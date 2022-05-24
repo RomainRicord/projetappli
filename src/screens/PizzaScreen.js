@@ -6,15 +6,15 @@ import AccueilScreen from './AccueilScreen';
 import Welcome from './Welcome';
 import ChoosePizzaScreen from './ChoosePizzaScreen';
 import ContactScreen from './ContactScreen';
-import terroirs from '../data/terroirs';
-import traditions from '../data/traditions';
-import montagnarde from '../data/montagnarde';
+import terroirs from '../data/terroirs.js';
+import traditions from '../data/traditions.js';
+import montagnarde from '../data/montagnarde.js';
 
 import { useState,useEffect } from 'react';
-
-const getlength = () => {
-
-}
+import CardPizza from '../components/CardPizza';
+import TerroirsComponent from '../components/TerroirsComponent';
+import TraditionsComponent from '../components/TraditionsComponent';
+import MontagnardesComponent from '../components/MontagnardesComponent';
 
 const PizzaScreen = (props) => {
 
@@ -23,27 +23,17 @@ const PizzaScreen = (props) => {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
     const containerStyle = {backgroundColor: 'white', padding: 20};
-    const [listpizza,setlistpizza] = useState(traditions)
-
-    const [firstHalf,setfirstHalf] = useState([])
-    const [secondHalf,setsecondHalf] = useState([])
-
-    const Map_ = () => {
-
-        const middleIndex = Math.ceil(listpizza.length / 2);
-
-        setfirstHalf(listpizza.splice(0, middleIndex))   
-        setsecondHalf(listpizza.splice(-middleIndex))
-
-        console.log(firstHalf,secondHalf)
-        
-    }
+    const [name,setname] = useState("")
+    const [ingredients,setingredients] = useState("")
+    const [pricepetite,setpricepetite] = useState("")
+    const [pricemoyenne,setpricemoyenne] = useState("")
+    const [pricegrande,setpricegrande] = useState("")
+    const [picture,setpicture] = useState("")
+    const [type,settype] = useState(0)
 
     useEffect(() => {
 
         console.log("PizzaScreenMount")
-
-        Map_()
 
     },[])
 
@@ -56,7 +46,8 @@ const PizzaScreen = (props) => {
     >
         <Portal>
             <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{flex: 1, justifyContent: "center", alignItems: "center",backgroundColor:'rgba(0,0,0,0.7)'}}>
-                <ChoosePizzaScreen title="Margherita" ingredients="Olive, origan"/>
+                <ChoosePizzaScreen title={name} ingredients={ingredients} pricepetite={pricepetite} pricemoyenne={pricemoyenne}
+                pricegrande={pricegrande} picture={picture} />
             </Modal>
         </Portal>
             <View style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:125,backgroundColor:'rgb(0,0,0)'}}>
@@ -66,28 +57,16 @@ const PizzaScreen = (props) => {
                 onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index)
                     if ((selectedItem) == "Terroirs") {
-                        setlistpizza(terroirs)
-                        const middleIndex = Math.ceil(listpizza.length / 2);
-
-                        setfirstHalf(listpizza.slice().splice(0, middleIndex))   
-                        setsecondHalf(listpizza.slice().splice(0, middleIndex))
-                        
+                        settype(1)
                         console.log("SetTerroirs")
                     } else if ((selectedItem) == "Traditions") {
-                        setlistpizza(traditions)
-                        const membersToRender = listpizza.filter(member => member.name)
-                        const middleIndex = Math.ceil(membersToRender.length / 2);
+                        settype(0)
+                                                
                         
-                        setfirstHalf(listpizza.slice().splice(0, middleIndex))   
-                        setsecondHalf(listpizza.slice().splice(0, middleIndex))
-                        console.log(listpizza,firstHalf,secondHalf,middleIndex,listpizza)
-                        console.log("SetTraditions")
                     } else if ((selectedItem) == "Montagnardes") {
-                        setlistpizza(montagnarde)
-                        const middleIndex = Math.ceil(listpizza.length / 2);
-
-                        setfirstHalf(listpizza.slice().splice(0, middleIndex))   
-                        setsecondHalf(listpizza.slice().splice(0, middleIndex))
+                        
+                        settype(2)
+                        
                         console.log("SetMontagnardes")
                     }
                 }}
@@ -109,35 +88,43 @@ const PizzaScreen = (props) => {
             /></View>
 
             <ScrollView style={{flex:1}}>
-                
-                    
+            
                 <View style={{display:'flex',flexDirection:'row',margin:20,justifyContent:'space-between'}}>
-                    <View style={{display:'flex',flexDirection:'column'}}>
-                        {firstHalf.map((e,k) => {
-                            return(
-                                <Pressable key={k} onPress={showModal}>
-                                <Card style={{width:150,height:100,marginBottom:60}}>
-                                    <Image style={{width:150,height:100}} source={e.picture} />
-                                
-                                    <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>{e.name}</Title>
-                                
-                                </Card></Pressable>
-                            )
-                        })}
-                    </View>
-                    <View style={{display:'flex',flexDirection:'column'}}>
-                        {secondHalf.map((e,k) => {
-                            return(
-                                <Pressable key={k} onPress={showModal}>
-                                <Card style={{width:150,height:100,marginBottom:60}}>
-                                    <Image style={{width:150,height:100}} source={e.picture} />
-                                
-                                    <Title style={{textAlign:'center',backgroundColor:'rgba(0,0,0,0.7)',color:'white'}}>{e.name}</Title>
-                                
-                                </Card></Pressable>
-                            )
-                        })}
-                    </View>
+                    
+                    {(type == 0) &&
+                    <TraditionsComponent 
+                    showModal={showModal}
+                    setpicture={setpicture}
+                    setname={setname}
+                    setingredients={setingredients}
+                    setpricepetite={setpricepetite}
+                    setpricemoyenne={setpricemoyenne}
+                    setpricegrande={setpricegrande}
+                     />
+                    }
+                    {(type == 1) &&
+                    <TerroirsComponent 
+                    showModal={showModal}
+                    setpicture={setpicture}
+                    setname={setname}
+                    setingredients={setingredients}
+                    setpricepetite={setpricepetite}
+                    setpricemoyenne={setpricemoyenne}
+                    setpricegrande={setpricegrande}
+                     />
+                    }
+                    {(type == 2) &&
+                    <MontagnardesComponent 
+                    showModal={showModal}
+                    setpicture={setpicture}
+                    setname={setname}
+                    setingredients={setingredients}
+                    setpricepetite={setpricepetite}
+                    setpricemoyenne={setpricemoyenne}
+                    setpricegrande={setpricegrande}
+                     />
+                    }
+                    
                 </View>
                     
                 

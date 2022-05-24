@@ -3,7 +3,7 @@ import {Paragraph, Title} from 'react-native-paper'
 
 const ChoosePizzaScreen = (props) => {
 
-    const {title,ingredients} = props
+    const {title,ingredients,pricepetite,pricemoyenne,pricegrande,picture} = props
 
     console.log(title)
 
@@ -15,7 +15,7 @@ const ChoosePizzaScreen = (props) => {
       blurRadius={3}
     >
 
-        <Image source={require('../../assets/i18445-margherite.jpeg')} style={{width:350    ,height:300,marginTop:20}} resizeMode="cover" />
+        <Image source={picture} style={{width:350    ,height:300,marginTop:20}} resizeMode="cover" />
         <Title style={{backgroundColor:'rgba(0,0,0,0.7)',color:'white',width:350,textAlign:'center',fontSize:32,padding:8,marginTop:20,marginBottom:20}}>{title}</Title>
         
         <View style={{width:350,flex:1,marginBottom:20,backgroundColor:'rgba(0,0,0,0.7)'}}>
@@ -31,7 +31,7 @@ const ChoosePizzaScreen = (props) => {
                     <Title style={{color:'white',textAlign:'center'}}>Petite</Title>
                 </View>
                 <View style={{flex:1,alignItems:'center',justifyContent:'center',height:50,backgroundColor:'rgba(0,0,0,0.7)'}}>
-                    <Title style={{color:'white',textAlign:'center'}}>5,30€</Title>
+                    <Title style={{color:'white',textAlign:'center'}}>{pricepetite}</Title>
                 </View>
             </View>
             <View style={styles.size}>
@@ -39,7 +39,7 @@ const ChoosePizzaScreen = (props) => {
                     <Title style={{color:'white',textAlign:'center'}}>Moyenne</Title>
                 </View>
                 <View style={{flex:1,alignItems:'center',justifyContent:'center',height:50,backgroundColor:'rgba(0,0,0,0.7)'}}>
-                    <Title style={{color:'white',textAlign:'center'}}>8,00€</Title>
+                    <Title style={{color:'white',textAlign:'center'}}>{pricemoyenne}</Title>
                 </View>
             </View>
             <View style={styles.size} >
@@ -47,7 +47,7 @@ const ChoosePizzaScreen = (props) => {
                     <Title style={{color:'white',textAlign:'center'}}>Grande</Title>
                 </View>
                 <View style={{flex:1,alignItems:'center',justifyContent:'center',height:50,backgroundColor:'rgba(0,0,0,0.7)'}}>
-                    <Title style={{color:'white',textAlign:'center'}}>11,00€</Title>
+                    <Title style={{color:'white',textAlign:'center'}}>{pricegrande}</Title>
                 </View>
             </View>
         </View>
