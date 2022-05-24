@@ -6,4 +6,8 @@ const terroirs = [
     {name:"Samba",ingredients:"Tomates pimentées, Mozzarella, Chorizo, Merguez, Crème",petite:"6,70€",moyenne:"10,00€",grande:"13,00€",picture: require("../../assets/img/samba.png")}
 ]
 
+<<<<<<< HEAD
 export default terroirs 
+=======
+export default terroirs
+>>>>>>> 8141becb6aba4fe0a49880a4d1b0ed07e6f05490
