@@ -1,7 +1,7 @@
-import {Image,View,ImageBackground,StyleSheet} from 'react-native'
-import {Title,Paragraph} from 'react-native-paper'
-
+import {Image,ImageBackground,StyleSheet} from 'react-native'
+import {Title} from 'react-native-paper'
 const ContactScreen = () => {
+    
     return(
         <ImageBackground
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -13,9 +13,11 @@ const ContactScreen = () => {
         source={require("../../assets/logo-289x300.png")}
         style={{ width: 289, height: 300 }}
       />
+      
       <Title style={styles.contact}>Numéro:</Title>
       <Title style={styles.contact}>02 35 95 86 54</Title>
       <Title style={[styles.contact2,{marginTop:20}]}>contact@fauvillaromane.com</Title>
+      
       </ImageBackground>
     )
 

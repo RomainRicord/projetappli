@@ -65,8 +65,8 @@ const TraditionsComponent = (props) => {
                         pricepetite={e.petite}
                         pricemoyenne={e.moyenne}
                         pricegrande={e.grande}
-                        name={e.name} 
-                        picture={e.picture} 
+                        name={e.name}
+                        picture={e.picture}
                         ingredients={e.ingredients} 
                         showModal={showModal}/>
                     )
