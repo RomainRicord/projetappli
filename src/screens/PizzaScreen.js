@@ -1,17 +1,10 @@
-import {View,ImageBackground,StyleSheet,ScrollView,Image,Pressable} from 'react-native'
-import { BottomNavigation,Button,Card,Title,Modal,Portal } from 'react-native-paper';
+import {View,ImageBackground,StyleSheet,ScrollView} from 'react-native'
+import { Modal,Portal } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import SelectDropdown from 'react-native-select-dropdown'
-import AccueilScreen from './AccueilScreen';
-import Welcome from './Welcome';
 import ChoosePizzaScreen from './ChoosePizzaScreen';
-import ContactScreen from './ContactScreen';
-import terroirs from '../data/terroirs.js';
-import traditions from '../data/traditions.js';
-import montagnarde from '../data/montagnarde.js';
 
 import { useState,useEffect } from 'react';
-import CardPizza from '../components/CardPizza';
 import TerroirsComponent from '../components/TerroirsComponent';
 import TraditionsComponent from '../components/TraditionsComponent';
 import MontagnardesComponent from '../components/MontagnardesComponent';

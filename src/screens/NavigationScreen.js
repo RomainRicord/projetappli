@@ -2,8 +2,6 @@ import {useState} from 'react'
 import { BottomNavigation } from 'react-native-paper';
 import AccueilScreen from '../screens/AccueilScreen';
 import PizzaScreen from '../screens/PizzaScreen';
-import Welcome from '../screens/Welcome';
-import ChoosePizzaScreen from './ChoosePizzaScreen';
 import ContactScreen from './ContactScreen';
 
 const NavigationScreen = () => {
