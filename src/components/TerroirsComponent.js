@@ -1,7 +1,6 @@
 import terroirs from '../data/terroirs.js';
 
-import {View,ImageBackground,StyleSheet,ScrollView,Image,Pressable} from 'react-native'
-import { BottomNavigation,Button,Card,Title,Modal,Portal } from 'react-native-paper';
+import {View,ScrollView} from 'react-native'
 
 import CardPizza from './CardPizza.js';
 
